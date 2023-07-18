@@ -93,10 +93,34 @@ posts.forEach((post) => {
     </div>`
 })
 
-document.querySelectorAll(".js-like-button").forEach((likeBtn) => {
-    likeBtn.addEventListener("click", thumbUp)
-})
+document.querySelectorAll(".js-like-button").forEach((likeBtn, i) => {
+    likeBtn.addEventListener("click", function () {
+        this.classList.toggle("text-primary");
 
-function thumbUp() {
-    this.classList.toggle("text-primary")
-}
+        //inserisce nell'array dei post con i like il loro indice solo se non è già presente 
+        if (!likedPosts.includes(posts[i].id)) {
+            likedPosts.push(posts[i].id)
+
+            //prende gli elementi con "js-likes-counter e incrementa se l'elemento non era ancora stato inserito in likedPosts"
+            document.querySelectorAll(".js-likes-counter").forEach((el, j) => {
+                if (j == i) {
+                    el.innerHTML++
+                }
+            })
+        } else {
+            likedPosts.pop(posts[i].id)
+
+            //prende gli elementi con "js-likes-counter e decrementa se l'elemento è già stato inserito in likedPosts"
+            document.querySelectorAll(".js-likes-counter").forEach((el, j) => {
+                if (j == i) {
+                    el.innerHTML--
+                }
+            })
+        }
+        console.log(likedPosts);
+
+        
+
+        
+    })
+})
